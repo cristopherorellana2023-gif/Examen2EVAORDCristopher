@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class VideojuegoRepository {
+public class VideojuegoRepository implements VideojuegoRepositoryInterface {
     private final Path archivoVideojuegos;
     private final Type tipoLista = new TypeToken<List<Videojuego>>(){}.getType();
     private List<Videojuego> videojuegos = new ArrayList<>();
@@ -22,7 +22,8 @@ public class VideojuegoRepository {
         cargarDatos();
     }
 
-    private void cargarDatos() {
+    @Override
+    public void cargarDatos() {
         try {
             if (Files.notExists(archivoVideojuegos.getParent())) {
                 Files.createDirectories(archivoVideojuegos.getParent());
@@ -40,7 +41,8 @@ public class VideojuegoRepository {
         }
     }
 
-    private void guardarDatos() {
+    @Override
+    public void guardarDatos() {
         try {
             String jsonVideojuegos = GsonFactory.getGson().toJson(videojuegos, tipoLista);
             Files.writeString(archivoVideojuegos, jsonVideojuegos);
@@ -49,6 +51,7 @@ public class VideojuegoRepository {
         }
     }
 
+    @Override
     public List<Videojuego> obtenerTodos() {
         cargarDatos();
         List<Videojuego> resultado = new ArrayList<>();
@@ -58,6 +61,7 @@ public class VideojuegoRepository {
         return resultado;
     }
 
+    @Override
     public Optional<Videojuego> buscarPorCodigo(String codigo) {
         cargarDatos();
         for (Videojuego v : videojuegos) {
@@ -68,6 +72,7 @@ public class VideojuegoRepository {
         return Optional.empty();
     }
 
+    @Override
     public boolean insertar(Videojuego nuevoVideojuego) {
         cargarDatos();
         Optional<Videojuego> existente = buscarPorCodigo(nuevoVideojuego.getCodigo());
@@ -79,6 +84,7 @@ public class VideojuegoRepository {
         return true;
     }
 
+    @Override
     public boolean eliminarPorCodigo(String codigo) {
         cargarDatos();
         boolean eliminado = false;
@@ -95,6 +101,7 @@ public class VideojuegoRepository {
         return eliminado;
     }
 
+    @Override
     public void modificar(Videojuego videojuegoModificado) {
         cargarDatos();
         for (int idx = 0; idx < videojuegos.size(); idx++) {

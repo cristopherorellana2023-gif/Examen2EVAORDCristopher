@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ClienteRepository {
+public class ClienteRepository implements ClienteRepositoryInterface {
     private final Path archivoClientes;
     private final Type tipoLista = new TypeToken<List<Cliente>>(){}.getType();
     private List<Cliente> clientes = new ArrayList<>();
@@ -22,7 +22,8 @@ public class ClienteRepository {
         cargarDatos();
     }
 
-    private void cargarDatos() {
+    @Override
+    public void cargarDatos() {
         try {
             if (Files.notExists(archivoClientes.getParent())) {
                 Files.createDirectories(archivoClientes.getParent());
@@ -40,7 +41,8 @@ public class ClienteRepository {
         }
     }
 
-    private void guardarDatos() {
+    @Override
+    public void guardarDatos() {
         try {
             String jsonClientes = GsonFactory.getGson().toJson(clientes, tipoLista);
             Files.writeString(archivoClientes, jsonClientes);
@@ -49,6 +51,7 @@ public class ClienteRepository {
         }
     }
 
+    @Override
     public List<Cliente> obtenerTodos() {
         cargarDatos();
         List<Cliente> resultado = new ArrayList<>();
@@ -58,6 +61,7 @@ public class ClienteRepository {
         return resultado;
     }
 
+    @Override
     public Optional<Cliente> buscarPorCodigo(String codigo) {
         cargarDatos();
         for (Cliente c : clientes) {
@@ -68,6 +72,7 @@ public class ClienteRepository {
         return Optional.empty();
     }
 
+    @Override
     public boolean insertar(Cliente nuevoCliente) {
         cargarDatos();
         Optional<Cliente> existente = buscarPorCodigo(nuevoCliente.getCodigo());
@@ -79,6 +84,7 @@ public class ClienteRepository {
         return true;
     }
 
+    @Override
     public boolean eliminarPorCodigo(String codigo) {
         cargarDatos();
         boolean eliminado = false;

@@ -18,11 +18,12 @@ public class ControladorConsola {
     private final ClienteService servicioClientes;
     private final VentaService servicioVentas;
 
-    public ControladorConsola(Scanner entrada) {
+    public ControladorConsola(Scanner entrada, VideojuegoService servicioVideojuegos, ClienteService servicioClientes,
+                              VentaService servicioVentas) {
         this.entrada = entrada;
-        this.servicioVideojuegos = new VideojuegoService();
-        this.servicioClientes = new ClienteService();
-        this.servicioVentas = new VentaService();
+        this.servicioVideojuegos = servicioVideojuegos;
+        this.servicioClientes = servicioClientes;
+        this.servicioVentas = servicioVentas;
     }
 
     public void menuVideojuegos() {

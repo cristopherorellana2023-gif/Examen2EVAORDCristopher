@@ -6,21 +6,24 @@ import es.iesquevedo.dao.ClienteRepository;
 import java.util.List;
 import java.util.Optional;
 
-public class ClienteService {
+public class ClienteService implements ClienteServiceInterface {
     private final ClienteRepository repositorio;
 
-    public ClienteService() {
-        this.repositorio = new ClienteRepository();
+    public ClienteService(ClienteRepository repositorio) {
+        this.repositorio = repositorio;
     }
 
+    @Override
     public List<Cliente> obtenerTodos() {
         return repositorio.obtenerTodos();
     }
 
+    @Override
     public Optional<Cliente> buscarPorCodigo(String codigo) {
         return repositorio.buscarPorCodigo(codigo);
     }
 
+    @Override
     public boolean registrarCliente(Cliente cliente) {
         if (cliente.getCodigo() == null || cliente.getCodigo().isBlank()) {
             return false;
@@ -34,6 +37,7 @@ public class ClienteService {
         return repositorio.insertar(cliente);
     }
 
+    @Override
     public boolean eliminarCliente(String codigo) {
         return repositorio.eliminarPorCodigo(codigo);
     }

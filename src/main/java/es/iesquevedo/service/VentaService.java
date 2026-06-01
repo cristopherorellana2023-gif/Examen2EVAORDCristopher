@@ -10,25 +10,28 @@ import es.iesquevedo.dao.ClienteRepository;
 import java.util.List;
 import java.util.Optional;
 
-public class VentaService {
+public class VentaService implements VentaServiceInterface {
     private final VentaRepository repositorioVentas;
     private final VideojuegoRepository repositorioVideojuegos;
     private final ClienteRepository repositorioClientes;
 
-    public VentaService() {
-        this.repositorioVentas = new VentaRepository();
-        this.repositorioVideojuegos = new VideojuegoRepository();
-        this.repositorioClientes = new ClienteRepository();
+    public VentaService(VentaRepository repositorioVentas, VideojuegoRepository repositorioVideojuegos, ClienteRepository repositorioClientes) {
+        this.repositorioVentas = repositorioVentas;
+        this.repositorioVideojuegos = repositorioVideojuegos;
+        this.repositorioClientes = repositorioClientes;
     }
 
+    @Override
     public List<Venta> obtenerTodas() {
         return repositorioVentas.obtenerTodas();
     }
 
+    @Override
     public Optional<Venta> buscarPorNumero(String numeroVenta) {
         return repositorioVentas.buscarPorNumero(numeroVenta);
     }
 
+    @Override
     public boolean procesarVenta(Venta venta) {
         if (venta.getNumeroVenta() == null || venta.getNumeroVenta().isBlank()) {
             return false;
@@ -59,6 +62,7 @@ public class VentaService {
         return repositorioVentas.insertar(venta);
     }
 
+    @Override
     public boolean cancelarVenta(String numeroVenta) {
         Optional<Venta> ventaOpt = repositorioVentas.buscarPorNumero(numeroVenta);
         if (ventaOpt.isEmpty()) {

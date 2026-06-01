@@ -1,12 +1,30 @@
 package es.iesquevedo;
 
+import es.iesquevedo.dao.ClienteRepository;
+import es.iesquevedo.dao.VentaRepository;
+import es.iesquevedo.dao.VideojuegoRepository;
+import es.iesquevedo.service.ClienteService;
+import es.iesquevedo.service.VentaService;
+import es.iesquevedo.service.VideojuegoService;
 import es.iesquevedo.ui.ControladorConsola;
 
 import java.util.Scanner;
 
 public class Main {
+
     private static final Scanner entrada = new Scanner(System.in);
-    private static final ControladorConsola controlador = new ControladorConsola(entrada);
+    //objetos del dao
+    public static ClienteRepository cr = new ClienteRepository();
+    public static  VideojuegoRepository vr = new VideojuegoRepository();
+    public static VentaRepository ventarepository = new VentaRepository();
+
+    //objetos del service
+    public static  ClienteService cs = new ClienteService(cr);
+    public static  VideojuegoService vds = new VideojuegoService(vr);
+    public static  VentaService vs = new VentaService(ventarepository, vr,cr);
+
+    //Obajeto controller del paquete ui
+    private static final ControladorConsola controlador = new ControladorConsola(entrada,vds,cs,vs);
 
     public static void main(String[] args) {
         boolean ejecutando = true;
