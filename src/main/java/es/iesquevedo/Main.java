@@ -7,12 +7,15 @@ import es.iesquevedo.service.ClienteService;
 import es.iesquevedo.service.VentaService;
 import es.iesquevedo.service.VideojuegoService;
 import es.iesquevedo.ui.ControladorConsola;
+import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.environment.se.WeldContainer;
 
+import java.awt.*;
 import java.util.Scanner;
 
 public class Main {
 
-    private static final Scanner entrada = new Scanner(System.in);
+    /*private static final Scanner entrada = new Scanner(System.in);
     //objetos del dao
     public static ClienteRepository cr = new ClienteRepository();
     public static  VideojuegoRepository vr = new VideojuegoRepository();
@@ -26,7 +29,18 @@ public class Main {
     //Obajeto controller del paquete ui
     private static final ControladorConsola controlador = new ControladorConsola(entrada,vds,cs,vs);
 
+        Inyeccion de dependencias manual comentados para utilizar la libreria Weld
+*/
+
+
+
     public static void main(String[] args) {
+
+        Scanner entrada = new Scanner(System.in);
+        WeldContainer container = new Weld().initialize();
+        ControladorConsola controlador = container.select(ControladorConsola.class).get();
+
+
         boolean ejecutando = true;
         while (ejecutando) {
             System.out.println("\n=== Tienda de Videojuegos ===");

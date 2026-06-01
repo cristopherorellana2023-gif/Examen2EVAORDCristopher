@@ -6,15 +6,17 @@ import es.iesquevedo.modelo.Cliente;
 import es.iesquevedo.dao.VentaRepository;
 import es.iesquevedo.dao.VideojuegoRepository;
 import es.iesquevedo.dao.ClienteRepository;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import java.util.List;
 import java.util.Optional;
-
+@ApplicationScoped
 public class VentaService implements VentaServiceInterface {
     private final VentaRepository repositorioVentas;
     private final VideojuegoRepository repositorioVideojuegos;
     private final ClienteRepository repositorioClientes;
-
+    @Inject
     public VentaService(VentaRepository repositorioVentas, VideojuegoRepository repositorioVideojuegos, ClienteRepository repositorioClientes) {
         this.repositorioVentas = repositorioVentas;
         this.repositorioVideojuegos = repositorioVideojuegos;

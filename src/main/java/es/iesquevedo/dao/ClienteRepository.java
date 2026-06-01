@@ -3,6 +3,8 @@ package es.iesquevedo.dao;
 import com.google.gson.reflect.TypeToken;
 import es.iesquevedo.modelo.Cliente;
 import es.iesquevedo.util.GsonFactory;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -11,12 +13,12 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@ApplicationScoped
 public class ClienteRepository implements ClienteRepositoryInterface {
     private final Path archivoClientes;
     private final Type tipoLista = new TypeToken<List<Cliente>>(){}.getType();
     private List<Cliente> clientes = new ArrayList<>();
-
+    @Inject
     public ClienteRepository() {
         this.archivoClientes = Path.of("data", "clientes.json");
         cargarDatos();

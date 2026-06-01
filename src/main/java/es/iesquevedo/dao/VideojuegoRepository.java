@@ -3,6 +3,8 @@ package es.iesquevedo.dao;
 import com.google.gson.reflect.TypeToken;
 import es.iesquevedo.modelo.Videojuego;
 import es.iesquevedo.util.GsonFactory;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -11,12 +13,12 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@ApplicationScoped
 public class VideojuegoRepository implements VideojuegoRepositoryInterface {
     private final Path archivoVideojuegos;
     private final Type tipoLista = new TypeToken<List<Videojuego>>(){}.getType();
     private List<Videojuego> videojuegos = new ArrayList<>();
-
+@Inject
     public VideojuegoRepository() {
         this.archivoVideojuegos = Path.of("data", "videojuegos.json");
         cargarDatos();
